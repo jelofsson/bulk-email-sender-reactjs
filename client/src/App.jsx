@@ -12,34 +12,51 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      entries: [],
+      columns: [],
+      data: [],
     };
 
-    this.loadEntries = this.loadEntries.bind(this);
+    this.processFile = this.processFile.bind(this);
   }
 
-  loadEntries(entries) {
-    this.setState({ entries });
-    console.log(entries);
+  /**
+   * Process File.
+   * 
+   * Split the csv content into columns and data.
+   *
+   * @author Jimmi Elofsson
+   * @param {string} content  csv formatted string
+   */
+  processFile(content) {
+    const contentArray = content.split('\n');
+    const columns = contentArray.shift().split(',');
+    const data = contentArray.map(ln => {
+      return ln.split(',');
+    });
+
+    console.log(columns, data);
+    this.setState({
+      columns,
+      data,
+    });
   }
 
   render() {
-    const {
-      entries,
-    } = this.state;
-
+    // TODO:
+    // Make Datatable into a class with props so that we can pass 
+    // {columns} and {data} into it, since now it consists of static functions.
     return (
       <div className="App">
         <Container maxWidth="lg">
           <Grid container spacing={3}>
             <Grid item xs={8}>
               <Box>
-                <Datatable entries={entries} />
+                <Datatable/>
               </Box>
             </Grid>
             <Grid item xs={4}>
               <Box>
-                <FileUpload onSubmit={this.loadEntries} />
+                <FileUpload onSubmit={this.processFile} />
               </Box>
               <Box>
                 <Confirm />
