@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   Container,
   Grid,
@@ -8,32 +8,49 @@ import Datatable from './Datatable';
 import FileUpload from './FileUpload';
 import Confirm from './Confirm';
 
-function App() {
-  return (
-    <div className="App">
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      entries: [],
+    };
 
-      <Container maxWidth="lg">
-        <Grid container spacing={3}>
+    this.loadEntries = this.loadEntries.bind(this);
+  }
 
-          <Grid item xs={8}>
-            <Box>
-              <Datatable />
-            </Box>
+  loadEntries(entries) {
+    this.setState({ entries });
+    console.log(entries);
+  }
+
+  render() {
+    const {
+      entries,
+    } = this.state;
+
+    return (
+      <div className="App">
+        <Container maxWidth="lg">
+          <Grid container spacing={3}>
+            <Grid item xs={8}>
+              <Box>
+                <Datatable entries={entries} />
+              </Box>
+            </Grid>
+            <Grid item xs={4}>
+              <Box>
+                <FileUpload onSubmit={this.loadEntries} />
+              </Box>
+              <Box>
+                <Confirm />
+              </Box>
+            </Grid>
           </Grid>
-
-          <Grid item xs={4}>
-            <Box>
-              <FileUpload />
-            </Box>
-            <Box>
-              <Confirm />
-            </Box>
-          </Grid>
-
-        </Grid>
-      </Container>
-    </div>
-  );
+        </Container>
+      </div>
+    );
+  }
 }
+
 
 export default App;

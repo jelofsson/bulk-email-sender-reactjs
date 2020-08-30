@@ -1,32 +1,59 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   Button,
   Card,
   CardContent,
   CardActions,
 } from '@material-ui/core';
+import axios from 'axios';
 
-export default function FileUpload() {
-  return (
-    <Card>
-      <CardContent>
-        <input
-          // ref={'file-upload'}
-          type="file"
-        />
-      </CardContent>
-      <CardActions style={{ justifyContent: 'flex-end' }}>
-        <Button
-          size="small"
-          variant="contained"
-          color="primary"
-          // onClick={e => {
-          //   // this.refs['file-upload'].click()
-          // }}
-        >
-          Add Subjects
-        </Button>
-      </CardActions>
-    </Card>
-  );
+class FileUpload extends Component {
+
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.fileInput = React.createRef();
+  }
+
+  handleSubmit(event) {
+    const {
+      onSubmit,
+    } = this.props;
+
+    event.preventDefault();
+    axios.get('MOCK_DATA-3.csv')
+      .then((response) => {
+        onSubmit(response.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <Card>
+          <CardContent>
+            <input
+              type="file"
+              ref={this.fileInput}
+            />
+          </CardContent>
+          <CardActions style={{ justifyContent: 'flex-end' }}>
+            <Button
+              size="small"
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              Add Subjects
+            </Button>
+          </CardActions>
+        </Card>
+      </form>
+    );
+  }
 }
+
+export default FileUpload;
