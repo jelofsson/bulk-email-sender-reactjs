@@ -1,8 +1,14 @@
-# Bulk email sender
+# Bulk Email Sender
 
 ## Client side
 
-### `cd client && npm start`
+### Install
+
+#### `cd client && npm install`
+
+### Run
+
+#### `cd client && npm start`
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
