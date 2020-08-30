@@ -30,11 +30,10 @@ class App extends Component {
   processFile(content) {
     const contentArray = content.split('\n');
     const columns = contentArray.shift().split(',');
-    const data = contentArray.map(ln => {
-      return ln.split(',');
-    });
+    const data = contentArray.map(ln => ln.split(','));
 
     console.log(columns, data);
+
     this.setState({
       columns,
       data,
