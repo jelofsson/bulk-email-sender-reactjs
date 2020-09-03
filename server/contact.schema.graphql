@@ -1,0 +1,22 @@
+const typeDefs = `
+enum Gender{
+  Male
+  Female
+}
+
+type Query {
+  getContacts(csv: String!): [Contact],
+  emailContacts(contacts: [Contact]!): Boolean,
+}
+
+type Contact {
+  name: String!
+  email: String!
+  phone: String!
+  gender: Gender!
+  language: String!,
+  country: String!
+}
+`;
+
+module.exports = typeDefs;
